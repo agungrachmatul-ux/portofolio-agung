@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portofolio Interaktif - Muhammad Agung Rachmatullah</title>
+    <!-- Chosen Palette: Brilliant Blues -->
+    <!-- Application Structure Plan: Designed a one-page interactive dashboard SPA. The structure flows from a high-level summary (Header, Key Metrics) to detailed exploration (Skills Charts, Interactive Timeline, Achievements Grid), ending with a clear Call to Action. This non-linear dashboard approach was chosen over a simple linear page because it allows recruiters to quickly grasp key qualifications and dive into areas of interest, which is more effective for a portfolio/CV context than a rigid report structure. -->
+    <!-- Visualization & Content Choices: 
+        - IPK Stat: Goal=Inform -> Viz=Big Number Card -> Justification=High impact, immediate visibility.
+        - Skills Composition: Goal=Compare -> Viz=Doughnut Chart (Chart.js/Canvas) -> Justification=Clearly shows parts-to-whole relationship of expertise areas.
+        - Skill Proficiency: Goal=Compare -> Viz=Radar Chart (Chart.js/Canvas) -> Justification=Effectively compares proficiency across multiple, distinct skill categories in one view.
+        - Experience: Goal=Change -> Viz=Interactive Timeline (HTML/CSS) -> Justification=Intuitive chronological presentation of career progression. NO SVG/Mermaid used.
+        - Achievements: Goal=Organize -> Viz=Icon-based Cards (HTML/CSS + Unicode) -> Justification=Visually segments and highlights key accomplishments for scannability. NO SVG/Mermaid used.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+        .card {
+            background-color: #ffffff;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            padding: 1.5rem;
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -33px;
+            top: 4px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background-color: #3b82f6;
+            border: 4px solid #f0f4f8;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <div class="container mx-auto p-4 sm:p-6 lg:p-8 max-w-7xl">
+
+        <header class="flex flex-col md:flex-row items-center text-center md:text-left mb-12">
+            <img src="images/Foto Full Body Senyum.jpg" alt="Foto Profil Muhammad Agung Rachmatullah" class="w-36 h-auto border-4 border-white shadow-lg mb-4 md:mb-0 md:mr-8">
+                                                    
+            <div>
+                <h1 class="text-4xl lg:text-5xl font-extrabold" style="color: #0a3d62;">Muhammad Agung Rachmatullah</h1>
+                <p class="mt-2 text-lg" style="color: #3c6382;">Lulusan Akuntansi Berorientasi Pada Hasil dengan Keahlian di Bidang Perpajakan dan Kepemimpinan</p>
+            </div>
+        </header>
+
+        <main>
+            <section id="overview" class="mb-12">
+                 <h2 class="text-3xl font-bold text-center mb-8" style="color: #0a3d62;">Gambaran Umum Kualifikasi</h2>
+                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="card text-center">
+                        <div class="text-6xl font-extrabold" style="color: #3b82f6;">3.94</div>
+                        <div class="text-lg font-semibold mt-2">IPK Akademik</div>
+                        <p class="text-sm text-gray-500">Lulusan S1 Akuntansi, Universitas Sriwijaya.</p>
+                    </div>
+                    <div class="card text-center">
+                        <div class="text-6xl font-extrabold" style="color: #3b82f6;">100+</div>
+                        <div class="text-lg font-semibold mt-2">Anggota Dipimpin</div>
+                        <p class="text-sm text-gray-500">Sebagai Ketua Umum di Komunitas Edukasi Ilmiah Ekonomi.</p>
+                    </div>
+                    <div class="card text-center">
+                         <div class="text-6xl font-extrabold" style="color: #3b82f6;">A&B</div>
+                         <div class="text-lg font-semibold mt-2">Sertifikasi Brevet</div>
+                         <p class="text-sm text-gray-500">Kompetensi terverifikasi dalam regulasi perpajakan.</p>
+                    </div>
+                 </div>
+            </section>
+            
+            <section id="skills" class="mb-12">
+                <h2 class="text-3xl font-bold text-center mb-8" style="color: #0a3d62;">Visualisasi Kompetensi</h2>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                    <div class="card">
+                         <h3 class="text-xl font-bold text-center mb-4" style="color: #1e3a8a;">Komposisi Keahlian</h3>
+                         <p class="text-center text-sm text-gray-600 mb-4">Distribusi fokus keahlian utama, menunjukkan fondasi yang kuat di bidang perpajakan dan kepemimpinan.</p>
+                         <div class="chart-container" style="height: 300px;">
+                             <canvas id="skillsDoughnutChart"></canvas>
+                         </div>
+                    </div>
+                    <div class="card">
+                        <h3 class="text-xl font-bold text-center mb-4" style="color: #1e3a8a;">Tingkat Kemahiran</h3>
+                        <p class="text-center text-sm text-gray-600 mb-4">Perbandingan tingkat kemahiran di berbagai area kompetensi kunci, dari teknis hingga strategis.</p>
+                        <div class="chart-container">
+                            <canvas id="competencyRadarChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="experience" class="mb-12">
+                <h2 class="text-3xl font-bold text-center mb-10" style="color: #0a3d62;">Linimasa Pengalaman Profesional</h2>
+                <div class="relative max-w-2xl mx-auto border-l-4" style="border-color: #60a5fa;">
+                    <div class="timeline-item mb-10 ml-8 pl-4">
+                        <p class="font-bold text-sm" style="color: #3c6382;">2024</p>
+                        <h3 class="text-xl font-semibold" style="color: #1e3a8a;">Ketua Umum Organisasi</h3>
+                        <p class="text-sm text-gray-500 mb-2">Komunitas Edukasi Ilmiah Ekonomi</p>
+                        <p class="text-gray-700">Memimpin 104 anggota dan mengarahkan strategi organisasi. Berhasil membawa tim meraih penghargaan tingkat nasional.</p>
+                    </div>
+                    <div class="timeline-item mb-10 ml-8 pl-4">
+                        <p class="font-bold text-sm" style="color: #3c6382;">2023</p>
+                        <h3 class="text-xl font-semibold" style="color: #1e3a8a;">Magang Divisi Pelayanan</h3>
+                        <p class="text-sm text-gray-500 mb-2">KPP Pratama Palembang Seberang Ulu</p>
+                        <p class="text-gray-700">Terlibat dalam pemadanan NIK-NPWP, sosialisasi perpajakan, dan asistensi pengisian e-filling untuk wajib pajak.</p>
+                    </div>
+                    <div class="timeline-item mb-10 ml-8 pl-4">
+                        <p class="font-bold text-sm" style="color: #3c6382;">2023</p>
+                        <h3 class="text-xl font-semibold" style="color: #1e3a8a;">Manajer Pengembangan Prestasi</h3>
+                        <p class="text-sm text-gray-500 mb-2">Komunitas Edukasi Ilmiah Ekonomi</p>
+                        <p class="text-gray-700">Mengelola tim 20 orang untuk mengembangkan program pelatihan debat dan karya tulis ilmiah.</p>
+                    </div>
+                    <div class="timeline-item ml-8 pl-4">
+                        <p class="font-bold text-sm" style="color: #3c6382;">2020</p>
+                        <h3 class="text-xl font-semibold" style="color: #1e3a8a;">Customer Relation Officer</h3>
+                        <p class="text-sm text-gray-500 mb-2">PT Finansia MultiFinance (KreditPlus)</p>
+                        <p class="text-gray-700">Mengelola dan memverifikasi kelengkapan berkas administrasi untuk proses pembiayaan.</p>
+                    </div>
+                </div>
+            </section>
+
+             <section id="achievements">
+                <h2 class="text-3xl font-bold text-center mb-8" style="color: #0a3d62;">Penghargaan & Pencapaian</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="card flex items-center">
+                        <span class="text-4xl mr-4">🏆</span>
+                        <div>
+                            <h3 class="font-semibold text-lg" style="color: #1e3a8a;">Juara 1 Debat Ekonomi</h3>
+                            <p class="text-sm text-gray-600">Kompetisi tingkat Regional 2022.</p>
+                        </div>
+                    </div>
+                    <div class="card flex items-center">
+                        <span class="text-4xl mr-4">🥇</span>
+                        <div>
+                            <h3 class="font-semibold text-lg" style="color: #1e3a8a;">Top 1 Proyek Ormawa</h3>
+                            <p class="text-sm text-gray-600">Kategori Lingkungan tingkat Nasional.</p>
+                        </div>
+                    </div>
+                    <div class="card flex items-center">
+                        <span class="text-4xl mr-4">🎓</span>
+                        <div>
+                            <h3 class="font-semibold text-lg" style="color: #1e3a8a;">Penerima Beasiswa</h3>
+                            <p class="text-sm text-gray-600">Awardee Bazma Pertamina 2022-2023.</p>
+                        </div>
+                    </div>
+                </div>
+             </section>
+        </main>
+        
+        <footer class="text-center mt-16 pt-8 border-t border-gray-300">
+            <h2 class="text-2xl font-bold" style="color: #0a3d62;">Siap Berkontribusi Pada Program Magang Magenta BUMN</h2>
+            <p class="mt-2 text-gray-600">Saya siap beradaptasi dan memberikan kontribusi nyata untuk mendukung tujuan dan proyek di BUMN.</p>
+            <div class="mt-4">
+                <a href="mailto:agungrachmatul@gmail.com" class="text-lg font-medium hover:underline" style="color: #3b82f6;">agungrachmatul@gmail.com</a>
+                <span class="mx-2 text-gray-400">|</span>
+                <a href="https://www.linkedin.com/in/muhammadagungrachmatullah" target="_blank" class="text-lg font-medium hover:underline" style="color: #3b82f6;">Profil LinkedIn</a>
+                 <span class="mx-2 text-gray-400">|</span>
+                <a href="https://www.instagram.com/agungr30" target="_blank" class="text-lg font-medium hover:underline" style="color: #3b82f6;">Instagram</a>
+            </div>
+        </footer>
+    </div>
+
+<script>
+    const brilliantBluesPalette = {
+        darkBlue: '#0a3d62',
+        mediumBlue: '#3c6382',
+        lightBlue: '#60a5fa',
+        accentBlue: '#3b82f6',
+        backgroundBlue: '#e0e7ff'
+    };
+
+    function wrapLabel(label, maxWidth) {
+        if (typeof label !== 'string') return label;
+        const words = label.split(' ');
+        const lines = [];
+        let currentLine = '';
+        words.forEach(word => {
+            if ((currentLine + ' ' + word).trim().length > maxWidth) {
+                if (currentLine.length > 0) lines.push(currentLine.trim());
+                currentLine = word;
+            } else {
+                currentLine = (currentLine + ' ' + word).trim();
+            }
+        });
+        if (currentLine.length > 0) lines.push(currentLine.trim());
+        return lines.length > 1 ? lines : label;
+    }
+
+    const tooltipTitleCallback = (tooltipItems) => {
+        const item = tooltipItems[0];
+        let label = item.chart.data.labels[item.dataIndex];
+        return Array.isArray(label) ? label.join(' ') : label;
+    };
+
+    const skillsDoughnutCtx = document.getElementById('skillsDoughnutChart').getContext('2d');
+    new Chart(skillsDoughnutCtx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Perpajakan', 'Administrasi & Keuangan', 'Kepemimpinan', 'Komunikasi'],
+            datasets: [{
+                data: [40, 25, 25, 10],
+                backgroundColor: [
+                    brilliantBluesPalette.darkBlue,
+                    brilliantBluesPalette.mediumBlue,
+                    brilliantBluesPalette.lightBlue,
+                    brilliantBluesPalette.accentBlue
+                ],
+                borderColor: '#ffffff',
+                borderWidth: 4,
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: { color: brilliantBluesPalette.darkBlue }
+                },
+                tooltip: { callbacks: { title: tooltipTitleCallback } }
+            }
+        }
+    });
+
+    const competencyRadarCtx = document.getElementById('competencyRadarChart').getContext('2d');
+    new Chart(competencyRadarCtx, {
+        type: 'radar',
+        data: {
+            labels: [
+                wrapLabel('Kepemimpinan Tim', 16), 
+                'Manajemen Proyek', 
+                wrapLabel('Pemecahan Masalah', 16),
+                'Analisis Keuangan', 
+                'Regulasi Pajak', 
+                'Komunikasi Publik'
+            ],
+            datasets: [{
+                label: 'Tingkat Kemahiran',
+                data: [9, 8, 8, 7, 9, 8],
+                backgroundColor: 'rgba(59, 130, 246, 0.2)',
+                borderColor: brilliantBluesPalette.accentBlue,
+                pointBackgroundColor: brilliantBluesPalette.accentBlue,
+                pointBorderColor: '#fff',
+                pointHoverBackgroundColor: '#fff',
+                pointHoverBorderColor: brilliantBluesPalette.accentBlue,
+                borderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                r: {
+                    angleLines: { color: '#d1d5db' },
+                    grid: { color: '#e5e7eb' },
+                    pointLabels: { 
+                        font: { size: 12 },
+                        color: brilliantBluesPalette.darkBlue 
+                    },
+                    ticks: {
+                        backdropColor: 'rgba(255, 255, 255, 0.75)',
+                        stepSize: 2
+                    },
+                    min: 0,
+                    max: 10
+                }
+            },
+            plugins: {
+                legend: { display: false },
+                tooltip: { callbacks: { title: tooltipTitleCallback } }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
